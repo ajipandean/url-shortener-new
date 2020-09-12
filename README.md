@@ -27,3 +27,46 @@ go mod vendor
 ```bash
 go run main.go
 ```
+
+## What you can do here?
+This project is intended to shorten the long URL to be shorter
+#### Shortening URL
+```
+// request
+POST /urls HTTP/1.1
+Accept: application/json
+Host: localhost:8080
+Content-Type: application/json
+
+{"url": URL_TO_SHORTEN}
+
+// response
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+  "_id": objectId,
+  "ref": int,
+  "url": string,
+  "base": string,
+  "created_at": date,
+  "updated_at": date
+}
+```
+You simply make POST request to localhost:8080/urls with "url" as request body formatted in JSON
+#### Redirect using shortened URL
+```
+// request
+GET /{base} HTTP/1.1
+Host: localhost:8080
+
+// response
+HTTP/1.1 303 See Other
+Content-Type: text/html
+Location: URL_TO_BE_REDIRECTED
+```
+You simply make GET request to localhost:8080/{base} with base (encoded ref) as path parameters
+
+---
+
+Thank you :)
