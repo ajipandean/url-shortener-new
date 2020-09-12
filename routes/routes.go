@@ -56,6 +56,12 @@ func Setup() {
         return
       }
 
+      url.Clicks = url.Clicks + 1
+      if err := mgm.Coll(url).Update(url); err != nil {
+        http.Error(w, err.Error(), http.StatusInternalServerError)
+        return
+      }
+
       http.Redirect(w, r, url.Url, http.StatusSeeOther)
     }
   })
